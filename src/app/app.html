@@ -1,0 +1,91 @@
+<div class="app-logo-container">
+  <a href="/" class="app-logo-link d-flex align-items-center" aria-label="Home">
+    <img src="assets/logo.svg" alt="Logo" class="app-logo" />
+    <span class="app-logo-title ms-2">KasProve</span>
+  </a>
+  <div class="flex-grow-1"></div>
+  <a href="https://kaspa.org" target="_blank" rel="noopener">
+    <img src="assets/powered-by-kaspa.svg" alt="Powered by Kaspa" class="kaspa-logo-indicator" />
+  </a>
+</div>
+
+<div class="turnstile-container" *ngIf="!captchaValue">
+  <ngx-turnstile [siteKey]="turnstileSiteKey" (resolved)="onCaptchaResponse($event)" theme="auto"
+    [tabIndex]="0"></ngx-turnstile>
+</div>
+
+
+<ng-container *ngIf="captchaValue">
+  <router-outlet></router-outlet>
+
+  <div class="mt-5"></div>
+
+  <div class="m-3">
+    <a href="https://github.com/kurchack_mad/kasprove" target="_blank" rel="noopener"> GitHub Source Code </a>
+  </div>
+
+  <div class="m-3 text-muted small license"></div>
+
+  <h4 class="m-3 mt-5">FAQ</h4>
+
+  <div class="alert alert-info mb-2">
+    <details>
+      <summary class="fw-bold">License (ISC)</summary>
+      <p>ISC License Copyright (c) {{ year }}, kurchack_mad</p>
+      <p>
+        Permission to use, copy, modify, and distribute this software for any purpose with or without fee is hereby
+        granted, provided that the above
+        copyright notice and this permission notice appear in all copies. THE SOFTWARE IS PROVIDED "AS IS" AND THE
+        AUTHOR
+        DISCLAIMS ALL WARRANTIES WITH
+        REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE
+        AUTHOR BE LIABLE FOR ANY SPECIAL,
+        DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR
+        PROFITS,
+        WHETHER IN AN ACTION OF
+        CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
+        THIS
+        SOFTWARE.
+      </p>
+    </details>
+  </div>
+  <div class="alert alert-info mb-2">
+    <details>
+      <summary class="fw-bold">How can I donate to support KasProve?</summary>
+      <p class="mb-2">Please send donations to the following Kaspa address.
+        Thank you for your support!</p>
+      <div class="d-flex align-items-center gap-2">
+        <code class="d-block mb-2 hash"> {{ donationAddress }} </code>
+        <button class="btn btn-outline-secondary btn-sm" (click)="copyDonationAddress()"><fa-icon icon="copy"></fa-icon>
+          Copy</button>
+      </div>
+      <div *ngIf="copiedDonation" class="text-muted">Copied!</div>
+    </details>
+  </div>
+  <div class="alert alert-info mb-2">
+    <details>
+      <summary class="fw-bold">What is a digital signature?</summary>
+      <p class="mb-0">
+        A digital signature in this context is a SHA-256 hash of a file or text.
+      </p>
+    </details>
+  </div>
+  <div class="alert alert-info mb-2">
+    <details>
+      <summary class="fw-bold">What do you mean by "prove"?</summary>
+      <p class="mb-0">
+        KasProve proves that the hash provided by the user matches the payload of the specified transaction
+        provided by the specified archival node.
+      </p>
+    </details>
+  </div>
+  <div class="alert alert-info mb-2">
+    <details>
+      <summary class="fw-bold">How can I adapt this to my own project?</summary>
+      <p class="mb-0">
+        Fork the repository on GitHub and modify the code to suit your needs.
+        KasProve is intended to be forked and adapted by software service providers.
+      </p>
+    </details>
+  </div>
+</ng-container>

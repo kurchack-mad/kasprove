@@ -1,0 +1,35 @@
+<div class="card card-body bg-light">
+  <div class="btn-group mb-3" role="group" *ngIf="!disableChangeInputType">
+    <button type="button" class="btn btn-outline-primary" [class.active]="inputType === 'file'"
+      (click)="toggleType('file')">
+      File
+    </button>
+    <button type="button" class="btn btn-outline-primary" [class.active]="inputType === 'text'"
+      (click)="toggleType('text')">
+      Text
+    </button>
+  </div>
+  <div *ngIf="disableChangeInputType" class="mb-3">
+    <b>{{ inputType | titlecase }}</b>
+  </div>
+
+  <div *ngIf="inputType === 'file'" class="mb-3">
+    <input type="file" class="form-control" (change)="onFileChange($event)" />
+    <span *ngIf="fileName" class="form-text">Selected: {{ fileName }}</span>
+  </div>
+
+  <div *ngIf="inputType === 'text'" class="mb-3">
+    <form [formGroup]="form">
+      <textarea formControlName="text" class="form-control" rows="3" placeholder="Enter text..."></textarea>
+    </form>
+  </div>
+
+  <div *ngIf="hash" class="alert alert-secondary mt-3">
+    <label class="fw-bold"><fa-icon icon="fingerprint" class="me-1"></fa-icon>Digital signature:</label>
+    <code class="d-block">{{ hash }}</code>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+    {{ errorMessage }}
+  </div>
+</div>

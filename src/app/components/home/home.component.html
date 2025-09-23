@@ -1,0 +1,44 @@
+<div class="container pt-3">
+  <div class="row mb-3">
+    <div class="col text-center">
+      <h1 class="text-primary">UPLOAD</h1>
+      <h5 class="text-neutral mt-2">Inscribe a digital signature on Kaspa</h5>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col">
+      <app-hash-input [hash]="hash" (hashGenerated)="onHashGenerated($event)"></app-hash-input>
+    </div>
+  </div>
+  <div class="row mb-3" *ngIf="hash && !url">
+    <div class="col">
+      <button class="btn btn-primary w-100" (click)="inscribeHash()" [disabled]="inscribing">
+        <fa-icon icon="paper-plane"></fa-icon>
+        Inscribe digital signature on Kaspa</button>
+      <div *ngIf="inscribing" class="text-center text-muted">Inscribing...</div>
+    </div>
+  </div>
+  <div class="row mb-3" *ngIf="url">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          KasProve URL (save this):
+        </div>
+        <div class="card-body bg-light d-block">
+          <code class="d-block mb-2">{{ url }}</code>
+          <a [href]="url" target="_blank" class="btn btn-primary w-100 mb-2"><fa-icon
+              icon="external-link-alt"></fa-icon> Open</a>
+          <button class="btn btn-outline-primary w-100 mb-2" (click)="copyUrl()"><fa-icon icon="copy"></fa-icon>
+            Copy</button>
+          <div *ngIf="copied" class="ms-2 text-center text-muted mb-2">Copied!</div>
+          <a href="/" class="btn btn-neutral w-100"><fa-icon icon="refresh"></fa-icon> Start Over</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mb-3" *ngIf="errorMessage">
+    <div class="col">
+      <div class="alert alert-danger text-center">{{errorMessage}}</div>
+    </div>
+  </div>
+</div>

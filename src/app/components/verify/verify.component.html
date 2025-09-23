@@ -1,0 +1,76 @@
+<div class="container py-4">
+  <div class="row mb-4">
+    <div class="col text-center">
+      <h1 class="text-primary">VERIFY</h1>
+      <h5 class="text-neutral mt-2">Verify a digital signature on Kaspa</h5>
+    </div>
+  </div>
+  <div class="row mb-3" *ngIf="loading">
+    <div class="col">
+      <div class="alert alert-primary text-center">Loading inscription...</div>
+    </div>
+  </div>
+  <ng-container *ngIf="!loading">
+    <div class="row mb-3" *ngIf="blockData; else notFound">
+      <div class="col">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h5 class="m-0 d-inline-block mt-2">Inscription</h5>
+            <div class="btn-group float-end" role="group">
+              <button type="button" class="btn btn-outline-primary" [class.active]="archivalNode === 'kas.fyi'"
+                (click)="changeArchivalNode('kas.fyi')" [disabled]="loading">
+                kas.fyi
+              </button>
+              <button type="button" class="btn btn-outline-primary" [class.active]="archivalNode === 'kaspa.org'"
+                (click)="changeArchivalNode('kaspa.org')" [disabled]="loading">
+                kaspa.org
+              </button>
+            </div>
+          </div>
+          <div class="card-body bg-light">
+            <div class="mb-2">
+              <strong><fa-icon icon="fingerprint"></fa-icon>Digital Signature: </strong>
+              <code>{{ blockData.hash }}</code>
+            </div>
+            <div class="mb-2">
+              <strong>Transaction ID: </strong>
+              <a [href]="getTxUrl" target="_blank" rel="noopener"><code class="me-2">{{ blockData.txid }}</code></a>
+            </div>
+            <div class="mb-2">
+              <strong>Block Time: </strong> <span class="badge bg-info text-dark">{{ blockData.timestamp | date :
+                "medium"
+                }}</span>
+            </div>
+            <div class="mb-2">
+              <strong>Block Accepted: </strong>
+              <span *ngIf="blockData.accepted; else notAccepted" class="badge bg-light text-dark">Yes</span>
+              <ng-template #notAccepted><span class="badge bg-danger text-white">No</span></ng-template>
+            </div>
+          </div>
+        </div>
+        <div class="alert alert-warning mb-3">
+          Provide same File/Text that should match the digital signature from the inscription.
+        </div>
+        <app-hash-input [disableChangeInputType]="true" [inputType]="inputType"
+          (hashGenerated)="onHashGenerated($event)"></app-hash-input>
+        <div *ngIf="uploadedHash" class="mt-3">
+          <div *ngIf="match" class="alert alert-success p-2">
+            <fa-icon [icon]="['fas', 'check']"></fa-icon>
+            Digital signature matches the inscription!
+          </div>
+          <div *ngIf="match === false" class="alert alert-danger p-2">
+            <fa-icon [icon]="['fas', 'times']"></fa-icon>
+            Digital signature does NOT match the inscription!
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #notFound>
+      <div class="row">
+        <div class="col">
+          <div class="alert alert-danger">Failed to load inscription!</div>
+        </div>
+      </div>
+    </ng-template>
+  </ng-container>
+</div>

@@ -1,0 +1,8 @@
+# Ignore artifacts:
+build
+
+# Ignore kaspa web dir
+src/app/web
+
+# Ignore browserlists file:
+**/*.browserslistrc
